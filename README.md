@@ -1,12 +1,18 @@
 # ChannelGrouping
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/channel_grouping`. To experiment with that code, run `bin/console` for an interactive prompt.
+Groups traffic into channels, similar to the groupings in Google Analytics
 
-TODO: Delete this and the text above, and describe your gem
+Given a source_url and destination_url, this gem will determine the traffic's channel
+(eg Social, Direct, Organic Search, Paid Search). 
+
+The categorizations are based on Google Analytics' [default channel definitions](https://support.google.com/analytics/answer/3297892)
+
 
 ## Limitations
 
 1. Display and Paid Search groupings do not take into account the Ad Distribution Network
+2. The list of Social Networks and Search Engines may differ from Google's lists.
+  - See `sources.yml` and https://support.google.com/analytics/answer/2795821
 
 ## Installation
 
@@ -41,3 +47,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
