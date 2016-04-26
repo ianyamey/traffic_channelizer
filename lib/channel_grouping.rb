@@ -1,15 +1,10 @@
 require 'channel_grouping/version'
 require 'channel_grouping/source'
+require 'channel_grouping/medium'
 
 module ChannelGrouping
   def self.identify(source_url: , destination_url:)
-    query_string = URI(destination_url).query
-
-    medium = if query_string
-      CGI::parse(query_string)['utm_medium'].first
-    else
-      'none'
-    end
+    medium = Medium.from_url(destination_url)
 
     return 'Email' if medium == 'email'
     return 'Affiliates' if medium == 'affiliate'
@@ -22,6 +17,7 @@ module ChannelGrouping
 
     return 'Direct' if source.direct? && medium == 'none'
     return 'Organic' if source.search_engine? || medium == 'organic'
+
     'Other'
   end
 end
