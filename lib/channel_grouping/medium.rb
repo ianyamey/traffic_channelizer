@@ -8,9 +8,9 @@ module ChannelGrouping
     def self.from_url(url)
       query_string = URI(url).query
 
-      return 'none' unless query_string
+      return unless query_string
 
-      CGI::parse(query_string)['utm_medium'].first || 'none'
+      CGI::parse(query_string)['utm_medium'].first
     end
   end
 end

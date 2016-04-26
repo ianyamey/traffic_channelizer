@@ -16,14 +16,27 @@ module ChannelGrouping
       end
     end
 
+    def social_network?
+      self.class.social_networks.any? do |social_network_host|
+        host_matches?(Regexp.new(social_network_host))
+      end
+    end
+
     def direct?
       uri.host.nil?
     end
 
+    def self.social_networks
+      @social_networks ||= config[:social_networks]
+    end
+
     def self.search_engines
-      @search_engines ||= [
-        { host: /google.com?/, search_query_param_key: 'q' }
-      ]
+      @search_engines ||= config[:search_engines]
+    end
+
+    def self.config
+      root = Pathname.new(File.expand_path("../..", __FILE__))
+      YAML.load_file(root.join('sources.yaml'))
     end
 
     private

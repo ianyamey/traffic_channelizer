@@ -29,13 +29,14 @@ module ChannelGrouping
     end
 
     describe '#search_engine?' do
-      let(:url) { "http://#{host}/some-path?#{query_string}" }
-
       before do
-        Source.search_engines << { host: /search-engine.com/, search_query_param_key: 'q' }
+        allow(YAML).to receive(:load_file).and_return(
+          search_engines: [{ host: /search-engine.com/, search_query_param_key: 'q' }]
+        )
       end
 
       context 'when the source host matches a search engine' do
+        let(:url) { "http://#{host}/some-path?#{query_string}" }
         let(:host) { 'www.search-engine.com' }
 
         context 'and the query string contain the search query parameter' do
@@ -64,11 +65,50 @@ module ChannelGrouping
       end
 
       context 'when the source host does not match any search engine hosts' do
-        let(:host) { 'www.not-a-search-engine.com' }
-        let(:query_string) { nil }
+        let(:url) { 'http://www.not-a-search-engine.com' }
 
         it 'returns false' do
           expect(Source.new(url).search_engine?).to be false
+        end
+      end
+
+      context 'when the url is nil' do
+        let(:url) { nil }
+
+        it 'returns false' do
+          expect(Source.new(url).search_engine?).to be false
+        end
+      end
+    end
+
+    describe '#social_network?' do
+      before do
+        allow(YAML).to receive(:load_file).and_return(
+          social_networks: ['facebook.com', 'twitter.com']
+        )
+      end
+
+      context 'when the source host matches one of the social networks' do
+        let(:url) { 'http://www.facebook.com/path/to/profile' }
+
+        it 'returns true' do
+          expect(Source.new(url).social_network?).to be true
+        end
+      end
+
+      context 'when the source host is not a social network' do
+        let(:url) { 'http://www.antisocial.com' }
+
+        it 'returns false' do
+          expect(Source.new(url).social_network?).to be false
+        end
+      end
+
+      context 'when the url is nil' do
+        let(:url) { nil }
+
+        it 'returns false' do
+          expect(Source.new(url).social_network?).to be false
         end
       end
     end

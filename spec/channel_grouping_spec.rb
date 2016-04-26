@@ -15,85 +15,124 @@ describe ChannelGrouping do
 
     let(:url) { 'http://example.com?utm_source=some_source' }
     let(:source_url) { 'http://external.site' }
-    let(:destination_url) do
-      "http://example.com/foo?utm_source=some-source&utm_medium=#{utm_medium}"
+    let(:destination_url) { double(:destination_url) }
+    let(:source) do
+      instance_double(
+        ChannelGrouping::Source,
+        direct?: direct,
+        search_engine?: search_engine,
+        social_network?: social_network
+      )
     end
-    let(:source) { instance_double(ChannelGrouping::Source, direct?: false, search_engine?: false) }
+    let(:direct) { false }
+    let(:search_engine) { false }
+    let(:social_network) { false }
 
     before do
       allow(ChannelGrouping::Source)
         .to receive(:new)
         .with(source_url)
         .and_return(source)
+
+      allow(ChannelGrouping::Medium)
+        .to receive(:from_url)
+        .with(destination_url)
+        .and_return(medium)
     end
 
     describe 'Organic Search' do
       context 'when the medium exactly matches organic' do
-        let(:utm_medium) { 'organic' }
+        let(:medium) { 'organic' }
 
-        it 'returns Organic' do
-          expect(subject).to eq 'Organic'
+        it 'returns Organic Search' do
+          expect(subject).to eq 'Organic Search'
         end
       end
 
       context 'when the source is a search engine' do
-        let(:destination_url) { 'http://example.com/foo' }
+        let(:search_engine) { true }
+        let(:medium) { nil }
 
-        let(:source) { instance_double(ChannelGrouping::Source, search_engine?: true, direct?: false) }
-
-        it 'returns Organic' do
-          expect(subject).to eq 'Organic'
+        it 'returns Organic Search' do
+          expect(subject).to eq 'Organic Search'
         end
       end
     end
 
-    # Direct
-      # ChannelGrouping::Source exactly matches Direct 
+    describe 'Direct' do
+      # ChannelGrouping::Source exactly matches Direct
       # AND
       # Medium exactly matches (not set)
       # OR
       # Medium exactly matches (none)
-    context 'when the source is direct' do
-      let(:source) { instance_double(ChannelGrouping::Source, direct?: true, search_engine?: false) }
+      context 'when the source is direct' do
+        let(:direct) { true }
 
-      context 'and the medium is not set' do
-        let(:destination_url) { 'http://example.com/foo' }
+        context 'and the medium is not set' do
+          let(:medium) { nil }
 
-        it 'returns Direct' do
-          expect(subject).to eq 'Direct'
+          it 'returns Direct' do
+            expect(subject).to eq 'Direct'
+          end
+        end
+
+        context 'and the medium is none' do
+          let(:medium) { 'none' }
+
+          it 'returns Direct' do
+            expect(subject).to eq 'Direct'
+          end
+        end
+
+        context 'and the medium is set' do
+          let(:medium) { 'some_medium' }
+
+          it 'does not return Direct' do
+            expect(subject).not_to eq 'Direct'
+          end
         end
       end
 
-      context 'and the medium is none' do
-        let(:utm_medium) { 'none' }
+      context 'when source is not direct' do
+        let(:direct) { false }
 
-        it 'returns Direct' do
-          expect(subject).to eq 'Direct'
-        end
-      end
+        context 'and the medium is set' do
+          let(:medium) { 'some_medium' }
 
-      context 'and the medium is set' do
-        let(:utm_medium) { 'some_medium' }
-
-        it 'does not return Direct' do
-          expect(subject).not_to eq 'Direct'
+          it 'does not return Direct' do
+            expect(subject).not_to eq 'Direct'
+          end
         end
       end
     end
 
-    context 'when source is not is a not direct' do
+    describe 'Social' do
+      context 'when the source is a social network' do
+        let(:social_network) { true }
+        let(:medium) { 'foo' }
 
+        it 'returns Social' do
+          expect(subject).to eq 'Social'
+        end
+      end
+
+      context 'when the medium exactly matches organic' do
+        let(:medium) { 'organic' }
+
+        %w(social social-network social-media).each do |paid_search_medium|
+          context "when the medium exactly matches #{paid_search_medium}" do
+            let(:medium) { paid_search_medium }
+
+            it 'returns Social' do
+              expect(subject).to eq 'Social'
+            end
+          end
+        end
+      end
     end
-
-    # Organic Search
-      # Medium exactly matches organic
-    # Social
-      # Social Source Referral exactly matches Yes
-      # OR
-      # Medium matches regex ^(social|social-network|social-media|sm|social network|social media)$
 
     context 'when the medium exactly matches email' do
-      let(:utm_medium) { 'email' }
+      let(:medium) { 'email' }
 
       it 'returns Email' do
         expect(subject).to eq 'Email'
@@ -101,7 +140,7 @@ describe ChannelGrouping do
     end
 
     context 'when the medium exactly matches affiliate' do
-      let(:utm_medium) { 'affiliate' }
+      let(:medium) { 'affiliate' }
 
       it 'returns Affiliates' do
         expect(subject).to eq 'Affiliates'
@@ -109,7 +148,7 @@ describe ChannelGrouping do
     end
 
     context 'when the medium exactly matches referral' do
-      let(:utm_medium) { 'referral' }
+      let(:medium) { 'referral' }
 
       it 'returns Referral' do
         expect(subject).to eq 'Referral'
@@ -122,7 +161,7 @@ describe ChannelGrouping do
       # Ad Distribution Network does not exactly match Content
       %w(cpc ppc paidsearch).each do |paid_search_medium|
         context "when the medium exactly matches #{paid_search_medium}" do
-          let(:utm_medium) { paid_search_medium }
+          let(:medium) { paid_search_medium }
 
           it 'returns Paid Search' do
             expect(subject).to eq 'Paid Search'
@@ -141,7 +180,7 @@ describe ChannelGrouping do
       # Medium matches regex ^(cpv|cpa|cpp)$
       %w(cpv cpa cpp).each do |other_advertising_medium|
         context "when the medium exactly matches #{other_advertising_medium}" do
-          let(:utm_medium) { other_advertising_medium }
+          let(:medium) { other_advertising_medium }
 
           it 'returns Other Advertising' do
             expect(subject).to eq 'Other Advertising'
@@ -161,7 +200,7 @@ describe ChannelGrouping do
 
       %w(display cpm banner).each do |other_advertising_medium|
         context "when the medium exactly matches #{other_advertising_medium}" do
-          let(:utm_medium) { other_advertising_medium }
+          let(:medium) { other_advertising_medium }
 
           it 'returns Display' do
             expect(subject).to eq 'Display'
@@ -172,7 +211,7 @@ describe ChannelGrouping do
 
     describe 'Other' do
       context 'when no other rules match' do
-        let(:utm_medium) { 'some-medium' }
+        let(:medium) { 'some-medium' }
 
         it 'returns Other' do
           expect(subject).to eq 'Other'
