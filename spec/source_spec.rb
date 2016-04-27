@@ -31,7 +31,7 @@ module ChannelGrouping
     describe '#search_engine?' do
       before do
         allow(YAML).to receive(:load_file).and_return(
-          search_engines: [{ host: /search-engine.com/, search_query_param_key: 'q' }]
+          'search_engines' => [{ 'host' => /search-engine.com/, 'search_query_param_key' => 'q' }]
         )
       end
 
@@ -84,7 +84,7 @@ module ChannelGrouping
     describe '#social_network?' do
       before do
         allow(YAML).to receive(:load_file).and_return(
-          social_networks: ['facebook.com', 'twitter.com']
+          'social_networks' => ['facebook.com', 'twitter.com']
         )
       end
 
@@ -116,6 +116,18 @@ module ChannelGrouping
     describe '.config' do
       it 'loads the config file' do
         expect(Source.config).to be_a Hash
+      end
+    end
+
+    describe '.search_engines' do
+      it 'has configuration for search engines' do
+        expect(Source.config['search_engines']).not_to be_empty
+      end
+    end
+
+    describe '.social_networks' do
+      it 'has configuration for social networks' do
+        expect(Source.config['social_networks']).not_to be_empty
       end
     end
   end

@@ -15,8 +15,8 @@ module ChannelGrouping
 
     def search_engine?
       self.class.search_engines.any? do |e| 
-        host_matches?(e[:host]) &&
-          contains_query_param?(e[:search_query_param_key])
+        host_matches?(e['host']) &&
+          contains_query_param?(e['search_query_param_key'])
       end
     end
 
@@ -31,11 +31,11 @@ module ChannelGrouping
     end
 
     def self.social_networks
-      @social_networks ||= config[:social_networks]
+      @social_networks ||= config['social_networks']
     end
 
     def self.search_engines
-      @search_engines ||= config[:search_engines]
+      @search_engines ||= config['search_engines']
     end
 
     def self.config
