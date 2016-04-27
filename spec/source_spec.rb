@@ -84,7 +84,7 @@ module ChannelGrouping
     describe '#social_network?' do
       before do
         allow(YAML).to receive(:load_file).and_return(
-          'social_networks' => ['facebook.com', 'twitter.com']
+          'social_networks' => [/facebook.com/, /twitter.com/]
         )
       end
 

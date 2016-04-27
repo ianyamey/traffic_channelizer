@@ -22,7 +22,7 @@ module ChannelGrouping
 
     def social_network?
       self.class.social_networks.any? do |social_network_host|
-        host_matches?(Regexp.new(social_network_host))
+        host_matches?(social_network_host)
       end
     end
 
