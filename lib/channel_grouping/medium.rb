@@ -10,7 +10,11 @@ module ChannelGrouping
 
       return unless query_string
 
-      CGI::parse(query_string)['utm_medium'].first
+      medium = CGI::parse(query_string)['utm_medium'].first
+
+      return if medium == ''
+
+      medium
     end
   end
 end

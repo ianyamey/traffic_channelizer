@@ -20,7 +20,7 @@ module ChannelGrouping
       end
 
       context 'when the url contains a blank utm_medium' do
-        let(:url) { 'http://example.com?umt_medium=&foo=bar' }
+        let(:url) { 'http://example.com?utm_medium=&foo=bar' }
 
         it "returns nil" do
           expect(Medium.from_url(url)).to eq nil
