@@ -1,8 +1,12 @@
 require 'uri'
 require 'cgi'
+require 'pathname'
+require 'yaml'
 
 module ChannelGrouping
   class Source
+    CONFIG_FILENAME = 'sources.yml'
+
     attr_reader :url
 
     def initialize(url)
@@ -36,7 +40,7 @@ module ChannelGrouping
 
     def self.config
       root = Pathname.new(File.expand_path("../../..", __FILE__))
-      YAML.load_file(root.join('sources.yaml'))
+      YAML.load_file(root.join(CONFIG_FILENAME))
     end
 
     private

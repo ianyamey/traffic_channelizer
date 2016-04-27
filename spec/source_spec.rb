@@ -112,5 +112,11 @@ module ChannelGrouping
         end
       end
     end
+
+    describe '.config' do
+      it 'loads the config file' do
+        expect(Source.config).to be_a Hash
+      end
+    end
   end
 end
