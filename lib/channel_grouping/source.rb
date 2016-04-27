@@ -35,7 +35,7 @@ module ChannelGrouping
     end
 
     def self.config
-      root = Pathname.new(File.expand_path("../..", __FILE__))
+      root = Pathname.new(File.expand_path("../../..", __FILE__))
       YAML.load_file(root.join('sources.yaml'))
     end
 
