@@ -1,203 +1,204 @@
 social_networks:
-  - /facebook.com/
-  - /reddit.com/
-  - /t.co/
-  - /twitter.com/
-  - /wordpres.com/
-  - /disqus.com/
-  - /linkedin.com/
-  - /lnkd.in/
-  - /blogspot/
-  - /stumbleupon.com/
-  - /tumblr.com/
-  - /getpocket.com/
-  - /glassdoor.com/
-  - /meetup.com/
-  - /pinterest.com/
-  - /plus.url.google.com/
-  - /youtube.com/
-  - /yammer.com/
-  - /plus.google.com/
-  - /touch.www/
-  - /diigo.com/
-  - /news.ycombinator.com/
-  - /paper.li/
-  - /digg.com/
-  - /bigtent.com/
-  - /blogger.com/
-  - /googleplus/
-  - /groups.google.com/
-  - /hootsuite.com/
-  - /instagram.com/
-  - /instapaper.com/
-  - /netvibes.com/
-  - /ow.ly/
-  - /pinboard.in/
-  - /quora.com/
-  - /scoop.it/
-  - /slashdot.org/
-  - /tinyurl.com/
-  - /twitter/
-  - /uk.pinterest.com/
-  - /wikihow.com/
+  - 'facebook.com'
+  - 'reddit.com'
+  - 't.co'
+  - 'twitter.com'
+  - 'wordpres.com'
+  - 'disqus.com'
+  - 'linkedin.com'
+  - 'lnkd.in'
+  - 'blogspot'
+  - 'stumbleupon.com'
+  - 'tumblr.com'
+  - 'getpocket.com'
+  - 'glassdoor.com'
+  - 'meetup.com'
+  - 'pinterest.com'
+  - 'plus.url.google.com'
+  - 'youtube.com'
+  - 'yammer.com'
+  - 'plus.google.com'
+  - 'touch.www'
+  - 'diigo.com'
+  - 'news.ycombinator.com'
+  - 'paper.li'
+  - 'digg.com'
+  - 'bigtent.com'
+  - 'blogger.com'
+  - 'googleplus'
+  - 'groups.google.com'
+  - 'hootsuite.com'
+  - 'instagram.com'
+  - 'instapaper.com'
+  - 'netvibes.com'
+  - 'ow.ly'
+  - 'pinboard.in'
+  - 'quora.com'
+  - 'scoop.it'
+  - 'slashdot.org'
+  - 'tinyurl.com'
+  - 'twitter'
+  - 'uk.pinterest.com'
+  - 'wikihow.com'
 search_engines:
-  - 
+  -
    name: Daum
-   host: /daum\.net/
+   host: 'daum\.net'
    search_query_param_key: 'q'
-  - 
+  -
    name: Eniro
-   host: /eniro\.se/
+   host: 'eniro\.se'
    search_query_param_key: 'search_word'
-  - 
+  -
    name: Naver
-   host: /naver\.com/
+   host: 'naver\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: Google
-   host: /google\.co?/
+   host: 'google\.co?'
    search_query_param_key: 'q'
-  - 
+  -
    name: Yahoo
-   host: /yahoo\.com/
+   host: 'yahoo\.com'
    search_query_param_key: 'p'
-  - 
+  -
    name: MSN
-   host: /msn\.com/
+   host: 'msn\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Bing
-   host: /bing\.com/
+   host: 'bing\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: AOL
-   host: /aol\.com/
+   host: 'aol\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: AOL Encrypted
-   host: /aol\.com/
+   host: 'aol\.com'
    search_query_param_key: 'encquery'
-  - 
+  -
    name: Lycos
-   host: /lycos\.com/
+   host: 'lycos\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: Ask
-   host: /ask\.com/
+   host: 'ask\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Altavista
-   host: /altavista\.com/
+   host: 'altavista\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Netscape
-   host: /search\.netscape\.com/
+   host: 'search\.netscape\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: CNN
-   host: /cnn.com\/SEARCH/
+   host: 'cnn.com\/SEARCH'
    search_query_param_key: 'query'
-  - 
+  -
    name: About
-   host: /about\.com/
+   host: 'about\.com'
    search_query_param_key: 'terms'
-  - 
+  -
    name: Mamma
-   host: /mamma\.com/
+   host: 'mamma\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: Alltheweb
-   host: /alltheweb\.com/
+   host: 'alltheweb\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Voila
-   host: /voila\.fr/
+   host: 'voila\.fr'
    search_query_param_key: 'rdata'
-  - 
+  -
    name: Virgilio
-   host: /search\.virgilio\.it/
+   host: 'search\.virgilio\.it'
    search_query_param_key: 'qs'
-  - 
+  -
    name: Live
-   host: /bing\.com/
+   host: 'bing\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Baidu
-   host: /baidu\.com/
+   host: 'baidu\.com'
    search_query_param_key: 'wd'
-  - 
+  -
    name: Alice
-   host: /alice\.com/
+   host: 'alice\.com'
    search_query_param_key: 'qs'
-  - 
+  -
    name: Yandex
-   host: /yandex\.com/
+   host: 'yandex\.com'
    search_query_param_key: 'text'
-  - 
+  -
    name: Najdi
-   host: /najdi\.org\.mk/
+   host: 'najdi\.org\.mk'
    search_query_param_key: 'q'
-  - 
+  -
    name: AOL
-   host: /aol\.com/
+   host: 'aol\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Mama
-   host: /mamma\.com/
+   host: 'mamma\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: Seznam
-   host: /seznam\.cz/
+   host: 'seznam\.cz'
    search_query_param_key: 'q'
-  - 
+  -
    name: Search
-   host: /search\.com/
+   host: 'search\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Wirtulana Polska
-   host: /wp\.pl/
+   host: 'wp\.pl'
    search_query_param_key: 'szukaj'
-  - 
+  -
    name: O*NET
-   host: /online\.onetcenter\.org/
+   host: 'online\.onetcenter\.org'
    search_query_param_key: 'qt'
-  - 
+  -
    name: Szukacz
-   host: /szukacz\.pl/
+   host: 'szukacz\.pl'
    search_query_param_key: 'q'
-  - 
+  -
    name: Yam
-   host: /yam\.com/
+   host: 'yam\.com'
    search_query_param_key: 'k'
-  - 
+  -
    name: PCHome
-   host: /pchome\.com/
+   host: 'pchome\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Kvasir
-   host: /kvasir\.no/
+   host: 'kvasir\.no'
    search_query_param_key: 'q'
-  - 
+  -
    name: Sesam
-   host: /sesam\.no/
+   host: 'sesam\.no'
    search_query_param_key: 'q'
-  - 
+  -
    name: Ozu
-   host: /ozu\.es/
+   host: 'ozu\.es'
    search_query_param_key: 'q'
-  - 
+  -
    name: Terra
-   host: /terra\.com/
+   host: 'terra\.com'
    search_query_param_key: 'query'
-  - 
+  -
    name: Mynet
-   host: /mynet\.com/
+   host: 'mynet\.com'
    search_query_param_key: 'q'
-  - 
+  -
    name: Ekolay
-   host: /ekolay\.net/
+   host: 'ekolay\.net'
    search_query_param_key: 'q'
-  - 
+  -
    name: Rambler
-   host: /rambler\.ru/
+   host: 'rambler\.ru'
    search_query_param_key: 'words'
+

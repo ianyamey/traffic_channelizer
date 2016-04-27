@@ -45,8 +45,8 @@ module ChannelGrouping
 
     private
 
-    def host_matches?(regexp)
-      uri.host =~ regexp
+    def host_matches?(regexp_string)
+      uri.host =~ Regexp.new(regexp_string)
     end
 
     def contains_query_param?(key)
