@@ -1,10 +1,12 @@
 require 'channel_grouping/version'
 require 'channel_grouping/source'
-require 'channel_grouping/medium'
+require 'channel_grouping/destination'
 
 module ChannelGrouping
   def self.identify(source_url: , destination_url:)
-    medium = Medium.from_url(destination_url)
+    destination = Destination.new(destination_url)
+
+    medium = destination.medium
 
     return 'Email' if medium == 'email'
     return 'Affiliates' if medium == 'affiliate'
@@ -17,9 +19,10 @@ module ChannelGrouping
 
     source = Source.new(source_url)
 
-    return 'Direct' if source.direct? && (medium == 'none' || medium.nil?)
     return 'Organic Search' if source.search_engine?
     return 'Social' if source.social_network?
+    return 'Direct' if source.direct? && (medium == 'none' || medium.nil?)
+    return 'Direct' if source.host == destination.host
 
     'Other'
   end

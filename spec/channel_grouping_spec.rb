@@ -21,12 +21,23 @@ describe ChannelGrouping do
         ChannelGrouping::Source,
         direct?: direct,
         search_engine?: search_engine,
-        social_network?: social_network
+        social_network?: social_network,
+        host: source_host
+      )
+    end
+    let(:destination) do
+      instance_double(
+        ChannelGrouping::Destination,
+        medium: medium,
+        host: destination_host
       )
     end
     let(:direct) { false }
     let(:search_engine) { false }
     let(:social_network) { false }
+    let(:medium) { double(:medium) }
+    let(:source_host) { double(:source_host) }
+    let(:destination_host) { double(:source_host) }
 
     before do
       allow(ChannelGrouping::Source)
@@ -34,10 +45,10 @@ describe ChannelGrouping do
         .with(source_url)
         .and_return(source)
 
-      allow(ChannelGrouping::Medium)
-        .to receive(:from_url)
+      allow(ChannelGrouping::Destination)
+        .to receive(:new)
         .with(destination_url)
-        .and_return(medium)
+        .and_return(destination)
     end
 
     describe 'Organic Search' do
@@ -89,6 +100,15 @@ describe ChannelGrouping do
 
           it 'does not return Direct' do
             expect(subject).not_to eq 'Direct'
+          end
+        end
+
+        context 'when the source and destination domains match' do
+          let(:source_host) { 'my-site.com' }
+          let(:destination_host) { 'my-site.com' }
+
+          it 'returns Direct' do
+            expect(subject).to eq 'Direct'
           end
         end
       end

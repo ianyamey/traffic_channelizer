@@ -1,13 +1,15 @@
 require 'spec_helper'
 
 module ChannelGrouping
-  describe Medium do
-    describe '.from_url' do
+  describe Destination do
+    describe '#medium' do
+      subject { Destination.new(url).medium }
+
       context 'when the url contains a utm_medium' do
         let(:url) { 'http://example.com?utm_medium=some-medium' }
 
         it 'extracts the utm_medium' do
-          expect(Medium.from_url(url)).to eq 'some-medium'
+          expect(subject).to eq 'some-medium'
         end
       end
 
@@ -15,7 +17,7 @@ module ChannelGrouping
         let(:url) { 'http://example.com?utm_medium=some%20medium' }
 
         it 'extracts the utm_medium' do
-          expect(Medium.from_url(url)).to eq 'some medium'
+          expect(subject).to eq 'some medium'
         end
       end
 
@@ -23,7 +25,7 @@ module ChannelGrouping
         let(:url) { 'http://example.com?utm_medium=&foo=bar' }
 
         it "returns nil" do
-          expect(Medium.from_url(url)).to eq nil
+          expect(subject).to eq nil
         end
       end
 
@@ -31,7 +33,7 @@ module ChannelGrouping
         let(:url) { 'http://example.com?foo=bar' }
 
         it "returns nil" do
-          expect(Medium.from_url(url)).to eq nil
+          expect(subject).to eq nil
         end
       end
 
@@ -39,9 +41,10 @@ module ChannelGrouping
         let(:url) { 'http://example.com' }
 
         it "returns nil" do
-          expect(Medium.from_url(url)).to eq nil
+          expect(subject).to eq nil
         end
       end
     end
   end
 end
+
