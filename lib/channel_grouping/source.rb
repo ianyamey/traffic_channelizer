@@ -30,6 +30,10 @@ module ChannelGrouping
       uri.host.nil?
     end
 
+    def host
+      uri.host
+    end
+
     def self.social_networks
       @social_networks ||= config['social_networks']
     end
@@ -46,7 +50,7 @@ module ChannelGrouping
     private
 
     def host_matches?(regexp_string)
-      uri.host =~ Regexp.new(regexp_string)
+      host =~ Regexp.new(regexp_string)
     end
 
     def contains_query_param?(key)
