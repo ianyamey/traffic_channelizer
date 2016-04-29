@@ -23,6 +23,7 @@ module ChannelGrouping
     return 'Social' if source.social_network?
     return 'Direct' if source.direct? && (medium == 'none' || medium.nil?)
     return 'Direct' if source.host == destination.host
+    return 'Referral' if source.host && (medium == 'none' || medium.nil?)
 
     'Other'
   end
