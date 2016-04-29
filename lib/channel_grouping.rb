@@ -8,14 +8,14 @@ module ChannelGrouping
 
     medium = destination.medium
 
-    return 'Email' if medium == 'email'
-    return 'Affiliates' if medium == 'affiliate'
-    return 'Referral' if medium == 'referral'
-    return 'Organic Search' if medium == 'organic'
-    return 'Paid Search' if medium =~ /^(cpc|ppc|paidsearch)$/
-    return 'Other Advertising' if medium =~ /^(cpv|cpa|cpp)$/
-    return 'Display' if medium =~ /^(display|cpm|banner)$/
-    return 'Social' if medium =~ /^(social|social-network|social-media|sm|social network|social media)$/
+    return 'Email' if medium =~ /^email$/i
+    return 'Affiliates' if medium =~ /^affiliate$/i
+    return 'Referral' if medium =~ /^referral$/i
+    return 'Organic Search' if medium =~ /^organic$/i
+    return 'Paid Search' if medium =~ /^(cpc|ppc|paidsearch)$/i
+    return 'Other Advertising' if medium =~ /^(cpv|cpa|cpp)$/i
+    return 'Display' if medium =~ /^(display|cpm|banner)$/i
+    return 'Social' if medium =~ /^(social|social-network|social-media|sm|social network|social media)$/i
 
     source = Source.new(source_url)
 

@@ -239,6 +239,14 @@ describe ChannelGrouping do
           end
         end
       end
+
+      context 'when the medium is a case insensitive match' do
+        let(:medium) { 'Display' }
+
+        it 'returns Display' do
+          expect(subject).to eq 'Display'
+        end
+      end
     end
 
     describe 'Other' do
