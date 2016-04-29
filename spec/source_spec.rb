@@ -57,7 +57,7 @@ module ChannelGrouping
     describe '#search_engine?' do
       before do
         allow(YAML).to receive(:load_file).and_return(
-          'search_engines' => [{ 'host' => /search-engine.com/, 'search_query_param_key' => 'q' }]
+          'search_engines' => ['search-engine\.com']
         )
       end
 
@@ -72,26 +72,10 @@ module ChannelGrouping
             expect(Source.new(url).search_engine?).to be true
           end
         end
-
-        context 'and the query string does not contain the search query parameter' do
-          let(:query_string) { 'foo=bar' }
-
-          it 'returns false' do
-            expect(Source.new(url).search_engine?).to be false
-          end
-        end
-
-        context 'and the query string is nil' do
-          let(:query_string) { nil }
-
-          it 'returns false' do
-            expect(Source.new(url).search_engine?).to be false
-          end
-        end
       end
 
       context 'when the source host does not match any search engine hosts' do
-        let(:url) { 'http://www.not-a-search-engine.com' }
+        let(:url) { 'http://www.not-a-search.com' }
 
         it 'returns false' do
           expect(Source.new(url).search_engine?).to be false
@@ -110,7 +94,7 @@ module ChannelGrouping
     describe '#social_network?' do
       before do
         allow(YAML).to receive(:load_file).and_return(
-          'social_networks' => [/facebook.com/, /twitter.com/]
+          'social_networks' => ['facebook\.com', 'twitter\.com']
         )
       end
 

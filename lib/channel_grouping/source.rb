@@ -14,9 +14,8 @@ module ChannelGrouping
     end
 
     def search_engine?
-      self.class.search_engines.any? do |e| 
-        host_matches?(e['host']) &&
-          contains_query_param?(e['search_query_param_key'])
+      self.class.search_engines.any? do |search_engine_host|
+        host_matches?(search_engine_host)
       end
     end
 
@@ -49,17 +48,8 @@ module ChannelGrouping
 
     private
 
-    def host_matches?(regexp_string)
-      host =~ Regexp.new(regexp_string)
-    end
-
-    def contains_query_param?(key)
-      query_param_keys.include?(key)
-    end
-
-    def query_param_keys
-      return [] if uri.query.nil?
-      @query_param_keys ||= CGI::parse(uri.query).keys
+    def host_matches?(other_host)
+      host =~ Regexp.new(other_host)
     end
 
     def uri
