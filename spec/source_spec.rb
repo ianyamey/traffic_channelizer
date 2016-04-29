@@ -28,6 +28,32 @@ module ChannelGrouping
       end
     end
 
+    describe '#host' do
+      context 'when the url is present' do
+        let(:url) { 'http://some-site.com/some/path' }
+
+        it 'returns the host' do
+          expect(Source.new(url).host).to eq 'some-site.com'
+        end
+      end
+
+      context 'when the url is a blank string' do
+        let(:url) { '' }
+
+        it 'returns nil' do
+          expect(Source.new(url).host).to be nil
+        end
+      end
+
+      context 'when the url is invalid' do
+        let(:url) { 'http|someinvalidurl?a|b' }
+
+        it 'returns nil' do
+          expect(Source.new(url).host).to be nil
+        end
+      end
+    end
+
     describe '#search_engine?' do
       before do
         allow(YAML).to receive(:load_file).and_return(

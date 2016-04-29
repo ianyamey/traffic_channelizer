@@ -167,11 +167,23 @@ describe ChannelGrouping do
       end
     end
 
-    context 'when the medium exactly matches referral' do
-      let(:medium) { 'referral' }
+    describe 'Referral' do
+      context 'when the medium exactly matches referral' do
+        let(:medium) { 'referral' }
 
-      it 'returns Referral' do
-        expect(subject).to eq 'Referral'
+        it 'returns Referral' do
+          expect(subject).to eq 'Referral'
+        end
+      end
+
+      context 'when there is a non-direct url referrer' do
+        let(:source_host) { 'some-referrer-host' }
+        let(:medium) { nil }
+        let(:direct) { false }
+
+        it 'returns Referral' do
+          expect(subject).to eq 'Referral'
+        end
       end
     end
 
@@ -230,7 +242,7 @@ describe ChannelGrouping do
     end
 
     describe 'Other' do
-      context 'when no other rules match' do
+      context 'when there is a medium not matching any other rules' do
         let(:medium) { 'some-medium' }
 
         it 'returns Other' do

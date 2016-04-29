@@ -64,6 +64,8 @@ module ChannelGrouping
 
     def uri
       @uri ||= URI(url.to_s)
+    rescue URI::InvalidURIError
+      URI('')
     end
   end
 end
