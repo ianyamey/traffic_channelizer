@@ -30,7 +30,7 @@ module ChannelGrouping
 
     describe '#host' do
       context 'when the url is present' do
-        let(:url) { 'http://some-site.com/some/path' }
+        let(:url) { 'http://www.some-site.com/some/path' }
 
         it 'returns the host' do
           expect(Source.new(url).host).to eq 'some-site.com'
@@ -56,9 +56,8 @@ module ChannelGrouping
 
     describe '#search_engine?' do
       before do
-        allow(YAML).to receive(:load_file).and_return(
-          'search_engines' => ['search-engine\.com']
-        )
+        parser = ChannelGrouping::Source.parser
+        parser.add_referer('search', 'some-source', 'search-engine.com')
       end
 
       context 'when the source host matches a search engine' do
@@ -93,13 +92,12 @@ module ChannelGrouping
 
     describe '#social_network?' do
       before do
-        allow(YAML).to receive(:load_file).and_return(
-          'social_networks' => ['facebook\.com', 'twitter\.com']
-        )
+        parser = ChannelGrouping::Source.parser
+        parser.add_referer('social', 'some-source', 'social-network.com')
       end
 
       context 'when the source host matches one of the social networks' do
-        let(:url) { 'http://www.facebook.com/path/to/profile' }
+        let(:url) { 'http://www.social-network.com/path/to/profile' }
 
         it 'returns true' do
           expect(Source.new(url).social_network?).to be true
@@ -120,24 +118,6 @@ module ChannelGrouping
         it 'returns false' do
           expect(Source.new(url).social_network?).to be false
         end
-      end
-    end
-
-    describe '.config' do
-      it 'loads the config file' do
-        expect(Source.config).to be_a Hash
-      end
-    end
-
-    describe '.search_engines' do
-      it 'has configuration for search engines' do
-        expect(Source.config['search_engines']).not_to be_empty
-      end
-    end
-
-    describe '.social_networks' do
-      it 'has configuration for social networks' do
-        expect(Source.config['social_networks']).not_to be_empty
       end
     end
   end

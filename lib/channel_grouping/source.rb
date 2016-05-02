@@ -1,7 +1,5 @@
-require 'uri'
-require 'cgi'
-require 'pathname'
-require 'yaml'
+require 'referer-parser'
+require 'addressable/uri'
 
 module ChannelGrouping
   class Source
@@ -9,53 +7,43 @@ module ChannelGrouping
 
     attr_reader :url
 
+    def self.parser
+      @parser ||= RefererParser::Parser.new
+    end
+
     def initialize(url)
       @url = url
     end
 
     def search_engine?
-      self.class.search_engines.any? do |search_engine_host|
-        host_matches?(search_engine_host)
-      end
+      referrer_data[:medium] == 'search'
     end
 
     def social_network?
-      self.class.social_networks.any? do |social_network_host|
-        host_matches?(social_network_host)
-      end
+      referrer_data[:medium] == 'social'
     end
 
     def direct?
-      uri.host.nil?
+      return true if url.to_s == ''
+
+      false
     end
 
     def host
-      uri.host
-    end
-
-    def self.social_networks
-      @social_networks ||= config['social_networks']
-    end
-
-    def self.search_engines
-      @search_engines ||= config['search_engines']
-    end
-
-    def self.config
-      root = Pathname.new(File.expand_path("../../..", __FILE__))
-      YAML.load_file(root.join(CONFIG_FILENAME))
+      raw_host = parsed_url.host
+      raw_host.gsub(/^www\./, '') if raw_host
     end
 
     private
 
-    def host_matches?(other_host)
-      host =~ Regexp.new(other_host)
+    def referrer_data
+      @referrer_data ||= self.class.parser.parse(url)
+    rescue RefererParser::InvalidUriError
+      {}
     end
 
-    def uri
-      @uri ||= URI(url.to_s)
-    rescue URI::InvalidURIError
-      URI('')
+    def parsed_url
+      @parsed_url ||= Addressable::URI.parse(url)
     end
   end
 end
