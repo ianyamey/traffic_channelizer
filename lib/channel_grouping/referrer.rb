@@ -9,16 +9,20 @@ module ChannelGrouping
       @parser ||= RefererParser::Parser.new
     end
 
+    class << self
+      attr_writer :parser
+    end
+
     def initialize(url)
       @url = url
     end
 
     def medium
-      referrer_data[:medium] || '(none)'
+      referrer_data[:medium]
     end
 
     def source
-      referrer_data[:source] || domain_without_www || '(direct)'
+      referrer_data[:source] || domain_without_www
     end
 
     def domain

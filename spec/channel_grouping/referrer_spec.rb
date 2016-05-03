@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module ChannelGrouping
   describe Referrer do
+    before { parser.clear! }
+
     describe '#medium' do
       context 'when the url matches one of the parser rules' do
         let(:url) { 'http://some-site.com' }
@@ -16,12 +18,10 @@ module ChannelGrouping
       end
 
       context 'when the url does not match any of the parser rules' do
-        before { parser.clear! }
-
         let(:url) { 'http://www.some-unmatched-site.com' }
 
         it 'returns (none)' do
-          expect(Referrer.new(url).medium).to eq '(none)'
+          expect(Referrer.new(url).medium).to be nil
         end
       end
 
@@ -29,7 +29,7 @@ module ChannelGrouping
         let(:url) { '' }
 
         it 'returns (none)' do
-          expect(Referrer.new(url).medium).to eq '(none)'
+          expect(Referrer.new(url).medium).to be nil
         end
       end
 
@@ -37,7 +37,7 @@ module ChannelGrouping
         let(:url) { nil }
 
         it 'returns (none)' do
-          expect(Referrer.new(url).medium).to eq '(none)'
+          expect(Referrer.new(url).medium).to be nil
         end
       end
     end
@@ -56,8 +56,6 @@ module ChannelGrouping
       end
 
       context 'when the url does not match any of the parser rules' do
-        before { parser.clear! }
-
         let(:url) { 'http://www.some-unmatched-site.com' }
 
         it 'uses the domain for the source' do
@@ -68,16 +66,16 @@ module ChannelGrouping
       context 'when the url is a blank string' do
         let(:url) { '' }
 
-        it 'returns (direct)' do
-          expect(Referrer.new(url).source).to eq '(direct)'
+        it 'returns nil' do
+          expect(Referrer.new(url).source).to be nil
         end
       end
 
       context 'when the url is nil' do
         let(:url) { nil }
 
-        it 'returns (direct)' do
-          expect(Referrer.new(url).source).to eq '(direct)'
+        it 'returns nil' do
+          expect(Referrer.new(url).source).to be nil
         end
       end
     end
@@ -127,7 +125,7 @@ module ChannelGrouping
     describe '#term' do
       context 'when the url matches one of the parser rules' do
         before do
-          parser.add_referer('search', 'some-source', 'some-site.com', ['query', 'q'])
+          parser.add_referer('search', 'some-source', 'some-site.com', %w(query q))
         end
 
         context 'and it has a param that matches one the terms' do
@@ -148,8 +146,6 @@ module ChannelGrouping
       end
 
       context 'when the url does not match any of the parser rules' do
-        before { parser.clear! }
-
         let(:url) { 'http://www.some-unmatched-site.com?q=some-query' }
 
         it 'uses the domain for the source' do
