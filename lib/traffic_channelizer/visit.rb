@@ -1,4 +1,4 @@
-module ChannelGrouping
+module TrafficChannelizer
   class Visit
     def initialize(referrer_url:, landing_page_url:)
       @referrer_url = referrer_url

@@ -1,34 +1,27 @@
-# ChannelGrouping
+# TrafficChannelizer
 
-Groups traffic into channels, similar to the groupings in Google Analytics
-
-Given a source_url and destination_url, this gem will determine the traffic's channel
+Given a referrer_url and destination landing_page_url, this gem will determine the 
+marketing attribution for the visit (source, medium, campaign) and channel group 
 (eg Social, Direct, Organic Search, Paid Search). 
 
 The categorizations are based on Google Analytics' [default channel definitions](https://support.google.com/analytics/answer/3297892)
-
 
 ## Limitations
 
 1. Display and Paid Search groupings do not take into account the Ad Distribution Network
 2. The list of Social Networks and Search Engines may differ from Google's lists.
-  - See `sources.yml` and https://support.google.com/analytics/answer/2795821
 
 ## Usage
 
 ```Ruby
-ChannelGrouping.identify(source_url: 'https://www.google.com?s=some-query', destination_url: 'https://your-site.com')
-#=> 'Organic Search'
-```
+TrafficChannelizer.analyze(referrer_url: 'https://www.google.com?s=some-query', landing_page_url: 'https://your-site.com')
+=> {:referrer_domain=>"google.com", :landing_page_domain=>"your-site.com", :medium=>"search", :source=>"Google", :term=>nil, :campaign=>nil, :content=>nil, :channel_group=>"Organic Search"}
 
-```Ruby
-ChannelGrouping.identify(source_url: 'https://www.some-site.com', destination_url: 'https://your-site.com?utm_medium=cpc')
-#=> 'Paid Search'
-```
+TrafficChannelizer.analyze(referrer_url: 'https://www.some-site.com', landing_page_url: 'https://your-site.com?utm_medium=cpc')
+=> {:referrer_domain=>"some-site.com", :landing_page_domain=>"your-site.com", :medium=>"cpc", :source=>"some-site.com", :term=>nil, :campaign=>nil, :content=>nil, :channel_group=>"Paid Search"}
 
-```Ruby
-ChannelGrouping.identify(source_url: nil, destination_url: 'https://your-site.com')
-#=> 'Direct'
+TrafficChannelizer.analyze(referrer_url: nil, landing_page_url: 'https://your-site.com')
+=> {:referrer_domain=>nil, :landing_page_domain=>"your-site.com", :medium=>"(none)", :source=>"(direct)", :term=>nil, :campaign=>nil, :content=>nil, :channel_group=>"Direct"}
 ```
 
 ## Installation
@@ -36,7 +29,7 @@ ChannelGrouping.identify(source_url: nil, destination_url: 'https://your-site.co
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'channel_grouping'
+gem 'traffic_channelizer'
 ```
 
 And then execute:
@@ -45,7 +38,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install channel_grouping
+    $ gem install traffic_channelizer
 
 ## Development
 
@@ -55,7 +48,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/channel_grouping/fork )
+1. Fork it ( https://github.com/[my-github-username]/traffic_channelizer/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

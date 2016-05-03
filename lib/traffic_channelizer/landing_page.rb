@@ -1,6 +1,6 @@
 require 'addressable/uri'
 
-module ChannelGrouping
+module TrafficChannelizer
   class LandingPage
     attr_reader :url
 

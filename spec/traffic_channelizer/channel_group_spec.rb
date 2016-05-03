@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ChannelGrouping
+module TrafficChannelizer
   describe ChannelGroup do
     describe '.identify' do
       subject do

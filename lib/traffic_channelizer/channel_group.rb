@@ -1,4 +1,4 @@
-module ChannelGrouping
+module TrafficChannelizer
   class ChannelGroup
     def self.identify(source:, medium:)
       return 'Email' if medium =~ /^email$/i

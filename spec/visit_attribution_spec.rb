@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe ChannelGrouping do
+describe TrafficChannelizer do
   it 'has a version number' do
-    expect(ChannelGrouping::VERSION).not_to be nil
+    expect(TrafficChannelizer::VERSION).not_to be nil
   end
 
   describe '.parse' do
     subject do
-      ChannelGrouping.parse(
+      TrafficChannelizer.analyze(
         referrer_url: referrer_url,
         landing_page_url: landing_page_url
       )
@@ -69,7 +69,7 @@ describe ChannelGrouping do
         let(:landing_page_url) { 'http://www.my-site.com/' }
 
         before do
-          ChannelGrouping::Referrer.parser = RefererParser::Parser.new
+          TrafficChannelizer::Referrer.parser = RefererParser::Parser.new
         end
 
         {

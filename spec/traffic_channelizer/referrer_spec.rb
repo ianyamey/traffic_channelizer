@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ChannelGrouping
+module TrafficChannelizer
   describe Referrer do
     before { parser.clear! }
 
@@ -171,7 +171,7 @@ module ChannelGrouping
     end
 
     def parser
-      ChannelGrouping::Referrer.parser
+      Referrer.parser
     end
   end
 end

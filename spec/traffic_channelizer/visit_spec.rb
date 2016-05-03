@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ChannelGrouping
+module TrafficChannelizer
   describe Visit do
     subject do
       Visit.new(
@@ -12,7 +12,7 @@ module ChannelGrouping
     let(:referrer_url) { 'http://external.site' }
     let(:referrer) do
       instance_double(
-        ChannelGrouping::Referrer,
+        Referrer,
         source: referrer_source,
         medium: referrer_medium,
         term: referrer_term,
@@ -27,7 +27,7 @@ module ChannelGrouping
     let(:landing_page_url) { double(:landing_page_url) }
     let(:landing_page) do
       instance_double(
-        ChannelGrouping::LandingPage,
+        LandingPage,
         utm_source: landing_page_source,
         utm_medium: landing_page_medium,
         utm_term: landing_page_term,

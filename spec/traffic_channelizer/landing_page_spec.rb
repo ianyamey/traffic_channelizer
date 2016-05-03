@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module ChannelGrouping
+module TrafficChannelizer
   describe LandingPage do
     describe '#utm_medium' do
       subject { LandingPage.new(url).utm_medium }

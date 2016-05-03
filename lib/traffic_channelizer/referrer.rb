@@ -1,7 +1,7 @@
 require 'referer-parser'
 require 'addressable/uri'
 
-module ChannelGrouping
+module TrafficChannelizer
   class Referrer
     attr_reader :url
 
