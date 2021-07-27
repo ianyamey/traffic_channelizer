@@ -1,3 +1,5 @@
+⚠️⚠️ This repository has been archived, and is no longer maintained ⚠️⚠️
+
 # TrafficChannelizer
 
 Given a referrer_url and destination landing_page_url, this gem will determine the 
